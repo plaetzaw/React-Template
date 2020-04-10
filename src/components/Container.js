@@ -5,21 +5,19 @@ import {
   testCaseAdd,
   testCaseDelete,
 } from "../actions/actionTemplate";
-
 class Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
       count: 0,
       obj: {
-        id: 3,
+        id: 4,
         name: "Alex",
-        age: "Iceland",
+        age: 21,
       },
       id: 1,
     };
   }
-
   handleClick = (e) => {
     this.setState(
       {
@@ -30,50 +28,50 @@ class Container extends Component {
       }
     );
   };
-
-  handleDelete = (e) => {
+  handleDelete = () => {
     this.props.testCaseDelete(this.state.id);
     this.setState({
       obj: this.props.tempSomeArray,
     });
   };
-
   render() {
     return (
       <>
-        <h1>count:</h1> <h3>{this.props.tempCount}</h3>
-        someArray:
+        <h1>count</h1>
+        <h3>{this.props.tempCount}</h3>
+        <h1>someArray: </h1>
         <ul>
           {this.props.tempSomeArray.map((item, index) => {
-            return <li key={index}>[item.name} | {item.age}</li>;
+            return (
+              <li key={index}>
+                {item.name} | {item.age}
+              </li>
+            );
           })}
         </ul>
-        update count:
-        <button onClick={this.handleClick}>
-          {/* <button onClick={() => this.props.testCase1(this.state.count)}> */}
-          Update Count
-        </button>
-        update testCaseAdd
+        <h1>update count:</h1>
+        <button onClick={this.handleClick}>Updating Count</button>
+        {/* <button onClick={() => this.props.testCase1(this.state.count)}>Updating Count</button> */}
+        <br />
+        <h1>update testCaseAdd</h1>
         <button onClick={() => this.props.testCaseAdd(this.state.obj)}>
-          Update testCaseAdd
+          TestCaseAdd
         </button>
-        delete item
-        <button onClick={this.handleDelete}>
-          {/* <button onClick={() => this.props.testCaseDelete(this.state.id)}> */}
-          Update testCaseDelete
+        <h1>delete item</h1>
+        {/* <button onClick={this.handleDelete}>Delete Item</button> */}
+        <button onClick={() => this.props.testCaseDelete(this.state.id)}>
+          TestCaseAdded
         </button>
       </>
     );
   }
 }
-
 let mapStateToProps = (state) => {
   return {
     tempCount: state.template.count,
     tempSomeArray: state.template.someArray,
   };
 };
-
 let mapDispatchToProps = (dispatch) => {
   return {
     testCase1: (countValue) => dispatch(testCase1(countValue)),
@@ -81,5 +79,4 @@ let mapDispatchToProps = (dispatch) => {
     testCaseDelete: (id) => dispatch(testCaseDelete(id)),
   };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(Container);
